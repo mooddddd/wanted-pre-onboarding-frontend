@@ -1,3 +1,5 @@
+import { FooterWarpper } from './styled/footer.styled';
+
 export const Footer = () => {
-  return <>footer</>;
+  return <FooterWarpper>footer</FooterWarpper>;
 };
