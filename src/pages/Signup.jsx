@@ -1,6 +1,7 @@
 import { useInput } from '../organisms/hooks';
 import { useNavigate } from 'react-router-dom';
 import { request } from '../organisms/utils';
+import { useEffect } from 'react';
 
 export const Signup = () => {
   const userMail = useInput('');
@@ -17,10 +18,20 @@ export const Signup = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    let body = new FormData(e.target);
-    await request.post('/auth/signup', body);
-    navigate('/signin');
+    try {
+      let body = new FormData(e.target);
+      await request.post('/auth/signup', body);
+      navigate('/signin');
+    } catch (e) {
+      console.log(e.message);
+    }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem('access_token')) {
+      navigate('/todo');
+    }
+  }, []);
 
   return (
     <>

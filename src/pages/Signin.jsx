@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useInput } from '../organisms/hooks';
 import { request } from '../organisms/utils';
+import { useEffect } from 'react';
 
 export const Signin = () => {
   const navigate = useNavigate();
@@ -20,11 +21,23 @@ export const Signin = () => {
       let body = { email: userMail.value, password: userPw.value };
       const response = await request.post('/auth/signin', body);
       console.log(response);
-      // navigate('/todo');
+      if (response.status === 200) {
+        localStorage.setItem(
+          'access_token',
+          JSON.stringify(response.data.access_token)
+        );
+        navigate('/todo');
+      }
     } catch (e) {
       console.log(e.message);
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem('access_token')) {
+      navigate('/todo');
+    }
+  }, []);
 
   return (
     <div>
