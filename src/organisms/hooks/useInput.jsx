@@ -6,5 +6,5 @@ export const useInput = (initState) => {
     const { value } = e.target;
     setValue(value);
   };
-  return { value, onChange };
+  return { value, setValue, onChange };
 };

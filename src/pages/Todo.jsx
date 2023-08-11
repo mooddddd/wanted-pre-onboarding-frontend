@@ -28,6 +28,7 @@ export const Todo = () => {
         todo: todo.value,
       };
       await request.post('/todos', body);
+      todo.setValue('');
       getList();
     } catch (e) {
       console.log(e.message);
@@ -102,7 +103,10 @@ export const Todo = () => {
             <input
               type='checkbox'
               checked={v.isCompleted}
-              onChange={(e) => checkHandler(v.id, e.target.checked)}
+              onChange={(e) => {
+                e.preventDefault();
+                checkHandler(v.id, e.target.checked);
+              }}
             />
             <input
               data-testid='modify-input'
@@ -129,7 +133,10 @@ export const Todo = () => {
             <input
               type='checkbox'
               checked={v.isCompleted}
-              onChange={(e) => checkHandler(v.id, e.target.checked)}
+              onChange={(e) => {
+                e.preventDefault();
+                checkHandler(v.id, e.target.checked);
+              }}
             />
             <span>{v.todo}</span>
           </label>
@@ -144,7 +151,8 @@ export const Todo = () => {
           </button>
           <button
             data-testid='delete-button'
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
               deleteHandler(v.id);
             }}
           >
