@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { request, setAccessToken } from '../organisms/utils';
 import { useInput } from '../organisms/hooks';
+import { useNavigate } from 'react-router-dom';
 
 export const Todo = () => {
   const [list, setList] = useState([]);
@@ -9,8 +10,10 @@ export const Todo = () => {
   const [deleteId, setDeleteId] = useState(null);
 
   const todo = useInput('');
-  const data = localStorage.getItem('access_token').split('"');
-  const token = data[1];
+  const data = localStorage.getItem('access_token');
+  const token = data ? data.split('"')[1] : null;
+
+  const navigation = useNavigate();
 
   // 리스트
   const getList = async () => {
@@ -86,7 +89,7 @@ export const Todo = () => {
 
   useEffect(() => {
     (async () => {
-      if (!token) return;
+      if (!token) return navigation('/signin');
       try {
         getList();
       } catch (e) {
