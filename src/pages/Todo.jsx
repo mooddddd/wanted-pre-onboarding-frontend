@@ -170,7 +170,11 @@ export const Todo = () => {
     <>
       <div>
         <form onSubmit={submitHandler}>
-          <input data-testid='new-todo-input' {...todo} />
+          <input
+            data-testid='new-todo-input'
+            value={todo.value}
+            onChange={todo.onChange}
+          />
           <button data-testid='new-todo-add-button' type='submit'>
             추가
           </button>

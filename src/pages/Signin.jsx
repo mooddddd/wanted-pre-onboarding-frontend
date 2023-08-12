@@ -43,13 +43,20 @@ export const Signin = () => {
     <div>
       <h1>로그인 페이지</h1>
       <form onSubmit={submitHandler}>
-        E-MAIL : <input data-testid='email-input' {...userMail} name='email' />
+        E-MAIL :{' '}
+        <input
+          data-testid='email-input'
+          name='email'
+          value={userMail.value}
+          onChange={userMail.onChange}
+        />
         <br />
         PASSWORD :{' '}
         <input
           data-testid='password-input'
           type='password'
-          {...userPw}
+          value={userPw.value}
+          onChange={userPw.onChange}
           name='password'
         />
         <br />
