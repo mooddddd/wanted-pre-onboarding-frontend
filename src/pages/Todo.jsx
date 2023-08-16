@@ -57,6 +57,7 @@ export const Todo = () => {
     <>
       <TodoWrapper>
         <TodoContentWrapper>
+          <h1>Todo List</h1>
           <FormStyle onSubmit={submitHandler}>
             <input
               data-testid='new-todo-input'
