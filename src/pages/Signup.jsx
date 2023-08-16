@@ -30,8 +30,9 @@ export const Signup = () => {
   useEffect(() => {
     if (localStorage.getItem('access_token')) {
       navigate('/todo');
+      console.log(`hi`);
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <>
@@ -55,7 +56,11 @@ export const Signup = () => {
             name='password'
           />
           <br />
-          <button data-testid='signin-button' disabled={buttonHandler()}>
+          <button
+            data-testid='signup-button'
+            disabled={buttonHandler()}
+            type='submit'
+          >
             회원가입
           </button>
         </form>

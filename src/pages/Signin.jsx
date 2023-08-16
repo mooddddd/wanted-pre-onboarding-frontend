@@ -37,7 +37,7 @@ export const Signin = () => {
     if (localStorage.getItem('access_token')) {
       navigate('/todo');
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <div>

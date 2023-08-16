@@ -1,7 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { Header } from '../organisms/layout/header';
 import { Main, Signin, Signup, Todo } from '../pages';
-import { Footer } from '../organisms/layout/footer';
 
 const AppRouter = () => {
   return (
@@ -13,7 +12,6 @@ const AppRouter = () => {
         <Route path='/signup' element={<Signup />} />
         <Route path='/todo' element={<Todo />} />
       </Routes>
-      <Footer />
     </>
   );
 };

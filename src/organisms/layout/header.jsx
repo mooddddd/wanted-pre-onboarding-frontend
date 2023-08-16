@@ -17,10 +17,7 @@ export const Header = () => {
 
   return (
     <HeaderWrapper>
-      <HeaderUl>
-        {menuMap}
-        <li>logout</li>
-      </HeaderUl>
+      <HeaderUl>{menuMap}</HeaderUl>
     </HeaderWrapper>
   );
 };
