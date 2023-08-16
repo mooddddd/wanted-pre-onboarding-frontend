@@ -20,7 +20,6 @@ export const Signin = () => {
     try {
       let body = { email: userMail.value, password: userPw.value };
       const response = await request.post('/auth/signin', body);
-      console.log(response);
       if (response.status === 200) {
         localStorage.setItem(
           'access_token',
@@ -30,6 +29,7 @@ export const Signin = () => {
       }
     } catch (e) {
       console.log(e.message);
+      alert(`아이디 혹은 비밀번호를 확인해주세요.`);
     }
   };
 

@@ -24,13 +24,13 @@ export const Signup = () => {
       navigate('/signin');
     } catch (e) {
       console.log(e.message);
+      alert(`사용할 수 없는 이메일입니다.`);
     }
   };
 
   useEffect(() => {
     if (localStorage.getItem('access_token')) {
       navigate('/todo');
-      console.log(`hi`);
     }
   }, [navigate]);
 
@@ -39,7 +39,7 @@ export const Signup = () => {
       <div>
         <h1>회원가입 페이지</h1>
         <form onSubmit={submitHandler}>
-          E-MAIL
+          E-MAIL :{' '}
           <input
             data-testid='email-input'
             name='email'
@@ -47,7 +47,7 @@ export const Signup = () => {
             onChange={userMail.onChange}
           />
           <br />
-          PASSWORD
+          PASSWORD :{' '}
           <input
             data-testid='password-input'
             type='password'

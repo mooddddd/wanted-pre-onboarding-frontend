@@ -2,6 +2,16 @@ import { useEffect, useState } from 'react';
 import { request, setAccessToken } from '../organisms/utils';
 import { useInput } from '../organisms/hooks';
 import { useNavigate } from 'react-router-dom';
+import {
+  AddListButton,
+  CheckBoxStyled,
+  FormStyle,
+  LeftButton,
+  ListStyle,
+  ModifyInput,
+  TodoContentWrapper,
+  TodoWrapper,
+} from './styled';
 
 export const Todo = () => {
   const [list, setList] = useState([]);
@@ -13,7 +23,7 @@ export const Todo = () => {
   const data = localStorage.getItem('access_token');
   const token = data ? data.split('"')[1] : null;
 
-  const navigation = useNavigate();
+  const navigate = useNavigate();
 
   // 리스트
   const getList = async () => {
@@ -46,7 +56,7 @@ export const Todo = () => {
         todo: list.find((v) => v.id === todoId).todo,
         isCompleted,
       };
-      const { data } = await request.put(`/todos/${todoId}`, body);
+      await request.put(`/todos/${todoId}`, body);
       getList();
     } catch (e) {
       console.log(e.message);
@@ -67,7 +77,7 @@ export const Todo = () => {
         todo: newTodo,
         isCompleted: list.find((v) => v.id === todoId).isCompleted,
       };
-      const { data } = await request.put(`/todos/${todoId}`, body);
+      await request.put(`/todos/${todoId}`, body);
       setModify(null);
       getList();
     } catch (e) {
@@ -89,7 +99,7 @@ export const Todo = () => {
 
   useEffect(() => {
     (async () => {
-      if (!token) return navigation('/signin');
+      if (!token) return navigate('/signin');
       try {
         getList();
       } catch (e) {
@@ -99,11 +109,11 @@ export const Todo = () => {
   }, []);
 
   const todoMap = list.map((v) => (
-    <li key={v.id}>
+    <ListStyle key={v.id}>
       {modify === v.id ? (
         <form>
           <label>
-            <input
+            <CheckBoxStyled
               type='checkbox'
               checked={v.isCompleted}
               onChange={(e) => {
@@ -111,13 +121,13 @@ export const Todo = () => {
                 checkHandler(v.id, e.target.checked);
               }}
             />
-            <input
+            <ModifyInput
               data-testid='modify-input'
               defaultValue={v.todo}
               onChange={newTodoHandler}
             />
           </label>
-          <button
+          <LeftButton
             data-testid='submit-button'
             onClick={(e) => {
               e.preventDefault();
@@ -125,7 +135,7 @@ export const Todo = () => {
             }}
           >
             제출
-          </button>
+          </LeftButton>
           <button data-testid='cancel-button' onClick={() => setModify(null)}>
             취소
           </button>
@@ -133,7 +143,7 @@ export const Todo = () => {
       ) : (
         <>
           <label>
-            <input
+            <CheckBoxStyled
               type='checkbox'
               checked={v.isCompleted}
               onChange={(e) => {
@@ -143,7 +153,7 @@ export const Todo = () => {
             />
             <span>{v.todo}</span>
           </label>
-          <button
+          <LeftButton
             data-testid='modify-button'
             onClick={(e) => {
               e.preventDefault();
@@ -151,7 +161,7 @@ export const Todo = () => {
             }}
           >
             수정
-          </button>
+          </LeftButton>
           <button
             data-testid='delete-button'
             onClick={(e) => {
@@ -163,25 +173,28 @@ export const Todo = () => {
           </button>
         </>
       )}
-    </li>
+    </ListStyle>
   ));
 
   return (
     <>
-      <div>
-        <form onSubmit={submitHandler}>
-          <input
-            data-testid='new-todo-input'
-            value={todo.value}
-            onChange={todo.onChange}
-          />
-          <button data-testid='new-todo-add-button' type='submit'>
-            추가
-          </button>
-        </form>
+      <TodoWrapper>
+        <TodoContentWrapper>
+          <FormStyle onSubmit={submitHandler}>
+            <input
+              data-testid='new-todo-input'
+              value={todo.value}
+              onChange={todo.onChange}
+              placeholder='내용을 입력해주세요.'
+            />
+            <AddListButton data-testid='new-todo-add-button' type='submit'>
+              추가
+            </AddListButton>
+          </FormStyle>
 
-        <ul>{todoMap}</ul>
-      </div>
+          <ul>{todoMap}</ul>
+        </TodoContentWrapper>
+      </TodoWrapper>
     </>
   );
 };
